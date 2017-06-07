@@ -4,10 +4,10 @@
 	<title>Gomato-Restaurants</title>
 </head>
 <body>
-	{% for i,j,k,l in info %}
+	{% for i,j,k,l,m in info %}
 	<h4>{{i}}</h4><br>
 	<h4>{{j}}</h4><br>
-	<a href="http://maps.google.com/maps?q={{l}},{{k}}">Map</a>
+	<a href="http://maps.google.com/maps?q={{l}},{{k}}">Map</a><p>   </p><a href="/putRes/{{i}}/{{l}}/{{k}}/{{m}}">Select This</a>
 	{% endfor %}
 
 </body>

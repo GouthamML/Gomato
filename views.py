@@ -87,6 +87,7 @@ def index():
 @app.route('/details', methods= ['GET','POST'])
 def details():
 	r_name = []
+        r_id = []
 	r_address = []
 	r_lat = []
 	r_lan = [] 
@@ -97,14 +98,40 @@ def details():
 	print result['response']['venues'][0]['location']['formattedAddress']
 	for i in range(1,10):
 		r_name.append(result['response']['venues'][i]['name'])
+                r_id.append(result['response']['venues'][i]['id'])
 		r_address.append(result['response']['venues'][i]['location']['formattedAddress'])
 		r_lat.append(result['response']['venues'][i]['location']['lat'])
 		r_lan.append(result['response']['venues'][i]['location']['lng'])
 	print r_name
 	print r_address
 	
-	return render_template('details.html', info = zip(r_name,r_address,r_lan,r_lat))
+	return render_template('details.html', info = zip(r_name,r_address,r_lan,r_lat,r_id))
 	# print result['response']['venues'][1]['location']['address']
+
+
+@app.route('/putRes/<name>/<lng>/<lat>/<rid>', methods=['GET','POST'])
+def putRes(name,lng,lat,rid):
+    username = session['username']
+    r_name = name 
+    r_lng = lng 
+    r_lat = lat
+    r_id = rid
+    cur=mysql.connection.cursor()
+    cur.execute("select id from login where username ='"+ username + "'")
+    ids = cur.fetchone()
+    cur.execute("insert into venue(source_id, rest_id, rest_name, r_lng, r_lat) values(%s,%s,%s,%s,%s)",(ids, rid, r_name, r_lng, r_lat))
+    mysql.connection.commit()
+    return redirect(url_for('index'))
+
+@app.route('/meetlist', methods = ['GET','POST'])
+def meetlist():
+    cur=mysql.connection.cursor()
+    username = session['username']
+    cur.execute("select id from login where username ='"+ username + "'")
+    id1 = cur.fetchone()
+    
+
+
 
 
 
