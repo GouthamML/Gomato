@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gomato-Restaurants</title>
+</head>
+<body>
+	{% for i,j,k,l in info %}
+	<h4>{{i}}</h4><br>
+	<h4>{{j}}</h4><br>
+	<a href="http://maps.google.com/maps?q={{l}},{{k}}">Map</a>
+	{% endfor %}
+
+</body>
+</html>

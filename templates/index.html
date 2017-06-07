@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gomato</title>
+</head>
+<body>
+<center><h1>Gomato</h1><br><h2>Hi, {{name}}</h2><br>
+<p>type area and city (Ex: Jayanagar Banglore) and select type of food from dropdown menu :)</p><br>
+<form action="{{url_for('details')}}" method="POST">
+	<p>Venue</p> {{form.name}}<br>
+	<p>Food</p><select name="food">
+                        <option value="pizza">Pizza</option>
+                        <option value="burger">Burger</option>
+                        <option value="roti">Roti</option>
+                        <option value="ice">Ice Cream</option>
+                    </select>
+                    {{form.submit}}
+</form><br>
+<a href="{{url_for('logout')}}">Logout</a></center>
+</body>
+</html>

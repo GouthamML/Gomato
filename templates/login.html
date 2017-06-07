@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gomato-login</title>
+</head>
+<body>
+<h2>Login now!</h2>
+<form action="{{url_for('check')}}" method="POST">
+	{{csrf_token}}
+	<p>Name</p>{{form.username}}<br>
+	<p>Password</p>{{form.password}}<br>
+	{{form.submit}}
+</form>
+<br><a href="{{url_for('logout')}}">Logout</a>
+</body>
+</html>
