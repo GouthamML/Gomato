@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Gomato-signup
+	</title>
+</head>
+<body>
+<h2>Register now!</h2>
+<form enctype="multipart/form-data" action="{{url_for('register')}}" method="POST">
+{{ form.csrf_token }}
+<p>Username</p>{{ form.username }}<br>
+<p>Password</p>{{ form.password }}<br>
+{{ form.submit }}
+</form>
+
+
+</body>
+</html>
