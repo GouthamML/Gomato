@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MyMeetings</title>
+</head>
+<body>
+{% for i,j,k,l in info %}
+<p>You have a meeting at <strong>{{j}}</strong> with <strong>{{i[0]}}.</strong> Locate at <a href="http://maps.google.com/maps?q={{k}},{{l}}"">map</a></p>
+{% endfor %}
+</body>
+</html>

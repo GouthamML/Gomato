@@ -123,16 +123,86 @@ def putRes(name,lng,lat,rid):
     mysql.connection.commit()
     return redirect(url_for('index'))
 
-@app.route('/meetlist', methods = ['GET','POST'])
+@app.route('/meetlist', )
 def meetlist():
     cur=mysql.connection.cursor()
+    r_name = []
+    org_id = []
+    r_lng = []
+    r_lat = []
+    r_req = []
     username = session['username']
     cur.execute("select id from login where username ='"+ username + "'")
     id1 = cur.fetchone()
-    
+    id2 = str(id1[0])
+    print id1[0]
+    cur.execute("select * from venue where source_id !='"+ id2 +"'")
+    query = cur.fetchall()
+    for j in query:
+        id3 = str(j[1])
+        cur.execute("select username from login where id = "+ id3 +"")
+        r_req.append(cur.fetchone())
+        r_name.append(j[3])
+        org_id.append(j[1])
+        print j[1]
+        r_lng.append(j[4])
+        r_lat.append(j[5])
+    return render_template('meetlist.html', info = zip(r_name,org_id,r_lng,r_lat, r_req))
 
+@app.route('/fixres/<rid>/<name>/<lng>/<lat>', methods = ['GET','POST'])
+def fixres(rid,name,lng,lat):
+    cur=mysql.connection.cursor()
+    username = session['username']
+    rid =rid
+    name  = name
+    lng=lng
+    lat=lat
+    cur.execute("select id from login where username ='"+ username + "'")
+    ids = cur.fetchone()
+    cur.execute("insert into f_res(fixer_id, org_id, fres_name, fr_lng, fr_lat) values(%s,%s,%s,%s,%s)",(ids, rid, name, lng, lat))
+    mysql.connection.commit()
+    return redirect(url_for('index'))
 
+@app.route('/matched',methods = ['GET','POST'])
+def matched():
+    cur=mysql.connection.cursor()
+    uname = []
+    rname=[]
+    rlng=[]
+    rlat=[]
+    username = session['username']
+    cur.execute("select id from login where username ='"+ username + "'")
+    ids = cur.fetchone()
+    id2 = str(ids[0])
+    cur.execute("select * from  f_res where org_id = '" + id2 + "'")
+    result = cur.fetchall()
+    for i in result:
+        id3 = str(i[1])
+        cur.execute("select username from login where id = " + id3 + "")
+        uname.append(cur.fetchone())
+        rname.append(i[3])
+        rlng.append(i[4])
+        rlat.append(i[5])
+    return render_template('matched.html',info = zip(uname,rname,rlng,rlat))
 
-
-
-
+@app.route('/mymeetings', methods = ['GET','POST'])
+def mymeetings():
+    cur=mysql.connection.cursor()
+    uname = []
+    rname=[]
+    rlng=[]
+    rlat=[]
+    username = session['username']
+    cur.execute("select id from login where username ='"+ username + "'")
+    ids = cur.fetchone()
+    id2 = str(ids[0])
+    cur.execute("select * from  f_res where fixer_id = '" + id2 + "'")
+    result = cur.fetchall()
+    for i in result:
+        id3 = str(i[2])
+        cur.execute("select username from login where id = " + id3 + "")
+        uname.append(cur.fetchone())
+        rname.append(i[3])
+        rlng.append(i[4])
+        rlat.append(i[5])
+    return render_template('mymeetings.html', info = zip(uname,rname,rlng,rlat))

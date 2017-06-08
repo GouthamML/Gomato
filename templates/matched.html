@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matched</title>
+</head>
+<body>
+{% for i,j,k,l in info %}
+<p>U got macthed from <strong>{{i[0]}}</strong> at <strong>{{j}}</strong>. Locate this in <a href="http://maps.google.com/maps?q={{k}},{{l}}">map</a>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gomato-Meetlist</title>
+</head>
+<body>
+{% for i,j,k,l,m in info %}
+<p><strong>{{i}}</strong> requested by {{m[0]}}</p> <br>
+<a href="http://maps.google.com/maps?q={{k}},{{l}}">Map</a><p>    </p><a href="/fixres/{{j}}/{{i}}/{{k}}/{{l}}">Fix meet here</a>
+{% endfor %}
+</body>
+</html>
